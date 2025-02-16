@@ -1,9 +1,8 @@
-import { RecoilRoot, atom, useRecoilValue, useSetRecoilState } from "recoil";
+import { useEffect, useState, useRef, createContext, useContext } from "react";
+import { RecoilRoot, useRecoilValue, useSetRecoilState } from "recoil";
+import { atom } from "./store/atoms/counter.js";
 
-const count = atom({
-  key: "countState",
-  default: 0,
-});
+/////////////////////////////// contextApi
 
 function App() {
   return (
@@ -18,18 +17,15 @@ function App() {
 }
 
 function Increase() {
-  const setCount = useSetRecoilState(count);
   return <button onClick={() => setCount((c) => c + 1)}>Increase</button>;
 }
 
 function Decrease() {
-  const setCount = useSetRecoilState(count);
   return <button onClick={() => setCount((c) => c - 1)}>Decrease</button>;
 }
 
 function Value() {
-  const countVal = useRecoilValue(count);
-  return <div>{countVal}</div>;
+  return <div>{count}</div>;
 }
 
 export default App;
