@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, createContext, useContext } from "react";
 import { RecoilRoot, useRecoilValue, useSetRecoilState } from "recoil";
-import { counterAtom } from "./store/atoms/counter.js";
+import { counterAtom, evenSelector } from "./store/atoms/counter.js";
 import { memo } from "react";
 
 // function App() {
@@ -35,50 +35,95 @@ import { memo } from "react";
 
 /////// memo
 
+// function App() {
+//   return (
+//     <div>
+//       <MemoizedCounter />
+//     </div>
+//   );
+// }
+
+// const MemoizedCounter = memo(Counter);
+
+// const MemoizedIncrease = memo(Increase);
+
+// const MemoizedDecrease = memo(Decrease);
+
+// const MemoizedValue = memo(Value);
+
+// function Counter() {
+//   const [count, setCount] = useState(0);
+
+//   useEffect(() => {
+//     setInterval(() => {
+//       setCount((c) => c + 1);
+//     }, 3000);
+//   }, []);
+
+//   return (
+//     <div>
+//       <MemoizedValue />
+//       <MemoizedIncrease />
+//       <MemoizedDecrease />
+//     </div>
+//   );
+// }
+
+// function Increase() {
+//   return <button>Increase</button>;
+// }
+
+// function Decrease() {
+//   return <button>Decrease</button>;
+// }
+
+// function Value() {
+//   return <div></div>;
+// }
+
+/////// using derived selectors
+
 function App() {
   return (
     <div>
-      <MemoizedCounter />
+      <RecoilRoot>
+        <Buttons />
+        <Counter />
+        <IsEven />
+      </RecoilRoot>
     </div>
   );
 }
 
-const MemoizedCounter = memo(Counter);
+function Buttons() {
+  const setCount = useSetRecoilState(counterAtom);
 
-const MemoizedIncrease = memo(Increase);
+  function increase() {
+    setCount((c) => c + 2);
+  }
 
-const MemoizedDecrease = memo(Decrease);
-
-const MemoizedValue = memo(Value);
-
-function Counter() {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    setInterval(() => {
-      setCount((c) => c + 1);
-    }, 3000);
-  }, []);
+  function decrease() {
+    setCount((c) => c - 1);
+  }
 
   return (
     <div>
-      <MemoizedValue />
-      <MemoizedIncrease />
-      <MemoizedDecrease />
+      <button onClick={() => increase()}>Increase</button>
+      <button onClick={() => decrease()}>Decrease</button>
     </div>
   );
 }
 
-function Increase() {
-  return <button>Increase</button>;
+function Counter() {
+  const count = useRecoilValue(counterAtom);
+
+  return <div>{count}</div>;
 }
 
-function Decrease() {
-  return <button>Decrease</button>;
-}
+function IsEven() {
+  const even = useRecoilValue(evenSelector);
 
-function Value() {
-  return <div></div>;
+  return <div>{even ? "True" : "False"}</div>;
 }
 
 export default App;
