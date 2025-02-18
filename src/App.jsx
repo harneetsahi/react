@@ -12,6 +12,8 @@ import {
   totalNoticationsSelector,
 } from "./store/atoms/notifications.js";
 
+import { todosAtomFamily } from "./store/atoms/todos.js";
+
 // function App() {
 //   return (
 //     <div>
@@ -137,44 +139,72 @@ import {
 
 /////// ANCHOR using derived selectors (recoil)
 
+// function App() {
+//   return (
+//     <div>
+//       <RecoilRoot>
+//         <Main />
+//       </RecoilRoot>
+//     </div>
+//   );
+// }
+
+// function Main() {
+//   const [notificationCount, setNotificationsCount] =
+//     useRecoilState(notificationsAtom);
+//   const totalNotifications = useRecoilValue(totalNoticationsSelector);
+
+//   return (
+//     <div
+//       style={{
+//         display: "flex",
+//         justifyContent: "center",
+//         gap: "10px",
+//         border: "1px solid gray",
+//       }}
+//     >
+//       <p>
+//         Network (
+//         {notificationCount.network >= 100 ? "99+" : notificationCount.network})
+//       </p>
+//       <p>Jobs ({notificationCount.jobs})</p>
+//       <p>Messages ({notificationCount.messages})</p>
+//       <p>
+//         Notifications ({" "}
+//         {notificationCount.notifications >= 100
+//           ? "99+"
+//           : notificationCount.notifications}
+//         )
+//       </p>
+//       <p>Me ({totalNotifications})</p>
+//     </div>
+//   );
+// }
+
+/////// ANCHOR: atomFamily
+
 function App() {
   return (
-    <div>
-      <RecoilRoot>
-        <Main />
-      </RecoilRoot>
-    </div>
+    <RecoilRoot>
+      <Todo id={1} />
+      <Todo id={2} />
+      <Todo id={3} />
+      <Todo id={4} />
+      <Todo id={5} />
+      <Todo id={6} />
+    </RecoilRoot>
   );
 }
 
-function Main() {
-  const [notificationCount, setNotificationsCount] =
-    useRecoilState(notificationsAtom);
-  const totalNotifications = useRecoilValue(totalNoticationsSelector);
+function Todo({ id }) {
+  // const currentTodo = useRecoilValue(todosAtomFamily(id));
+
+  /// to get from backend
+  const [todo, setTodo] = useRecoilState(todosAtomFamily(id));
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        gap: "10px",
-        border: "1px solid gray",
-      }}
-    >
-      <p>
-        Network (
-        {notificationCount.network >= 100 ? "99+" : notificationCount.network})
-      </p>
-      <p>Jobs ({notificationCount.jobs})</p>
-      <p>Messages ({notificationCount.messages})</p>
-      <p>
-        Notifications ({" "}
-        {notificationCount.notifications >= 100
-          ? "99+"
-          : notificationCount.notifications}
-        )
-      </p>
-      <p>Me ({totalNotifications})</p>
+    <div>
+      Todo {todo.id}: {todo.title}
     </div>
   );
 }
