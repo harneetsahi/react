@@ -3,6 +3,7 @@ import {
   RecoilRoot,
   useRecoilState,
   useRecoilValue,
+  useRecoilValueLoadable,
   useSetRecoilState,
 } from "recoil";
 import { counterAtom, evenSelector } from "./store/atoms/counter.js";
@@ -200,13 +201,22 @@ function Todo({ id }) {
   // const currentTodo = useRecoilValue(todosAtomFamily(id));
 
   /// to get from backend
-  const [todo, setTodo] = useRecoilState(todosAtomFamily(id));
+  // const todo = useRecoilValue(todosAtomFamily(id));
 
-  return (
-    <div>
-      Todo {todo.id}: {todo.title}
-    </div>
-  );
+  /// loadable : gives us access to state and contents
+  const todo = useRecoilValueLoadable(todosAtomFamily(id));
+
+  if (todo.state === "loading") {
+    return <div>loading...</div>;
+  } else if (todo.state === "hasValue") {
+    return (
+      <div>
+        Todo {todo.contents.id}: {todo.contents.title}
+      </div>
+    );
+  } else if (todo.state === "hasError") {
+    return <div>Error while getting data from backend</div>;
+  }
 }
 
 export default App;
