@@ -2,6 +2,13 @@ import { useEffect, useState, useRef, createContext, useContext } from "react";
 import { RecoilRoot, useRecoilValue, useSetRecoilState } from "recoil";
 import { counterAtom, evenSelector } from "./store/atoms/counter.js";
 import { memo } from "react";
+import {
+  networkAtom,
+  jobsAtom,
+  notificationsAtom,
+  messagesAtom,
+  totalNoticationsSelector,
+} from "./store/atoms/notifications.js";
 
 // function App() {
 //   return (
@@ -33,7 +40,7 @@ import { memo } from "react";
 //   return <div>{count}</div>;
 // }
 
-/////// memo
+/////// ANCHOR memo
 
 // function App() {
 //   return (
@@ -81,49 +88,81 @@ import { memo } from "react";
 //   return <div></div>;
 // }
 
-/////// using derived selectors
+/////// ANCHOR using derived selectors (recoil)
+
+// function App() {
+//   return (
+//     <div>
+//       <RecoilRoot>
+//         <Buttons />
+//         <Counter />
+//         <IsEven />
+//       </RecoilRoot>
+//     </div>
+//   );
+// }
+
+// function Buttons() {
+//   const setCount = useSetRecoilState(counterAtom);
+
+//   function increase() {
+//     setCount((c) => c + 2);
+//   }
+
+//   function decrease() {
+//     setCount((c) => c - 1);
+//   }
+
+//   return (
+//     <div>
+//       <button onClick={() => increase()}>Increase</button>
+//       <button onClick={() => decrease()}>Decrease</button>
+//     </div>
+//   );
+// }
+
+// function Counter() {
+//   const count = useRecoilValue(counterAtom);
+
+//   return <div>{count}</div>;
+// }
+
+// function IsEven() {
+//   const even = useRecoilValue(evenSelector);
+
+//   return <div>{even ? "Even" : "Odd"}</div>;
+// }
+
+/////// ANCHOR using derived selectors (recoil)
 
 function App() {
   return (
     <div>
       <RecoilRoot>
-        <Buttons />
-        <Counter />
-        <IsEven />
+        <Main />
       </RecoilRoot>
     </div>
   );
 }
 
-function Buttons() {
-  const setCount = useSetRecoilState(counterAtom);
-
-  function increase() {
-    setCount((c) => c + 2);
-  }
-
-  function decrease() {
-    setCount((c) => c - 1);
-  }
+function Main() {
+  const networkCount = useRecoilValue(networkAtom);
+  const jobsCount = useRecoilValue(jobsAtom);
+  const notificationCount = useRecoilValue(notificationsAtom);
+  const messageCount = useRecoilValue(messagesAtom);
+  const totalNotifications = useRecoilValue(totalNoticationsSelector);
 
   return (
-    <div>
-      <button onClick={() => increase()}>Increase</button>
-      <button onClick={() => decrease()}>Decrease</button>
+    <div style={{ display: "flex", gap: "10px" }}>
+      <p>Network ({networkCount >= 100 ? "99+" : networkCount})</p>
+      <p>Jobs ({jobsCount})</p>
+      <p>Messages ({messageCount})</p>
+      <p>
+        Notifications ( {notificationCount >= 100 ? "99+" : notificationCount})
+      </p>
+      <p>Me ({totalNotifications})</p>
     </div>
   );
-}
-
-function Counter() {
-  const count = useRecoilValue(counterAtom);
-
-  return <div>{count}</div>;
-}
-
-function IsEven() {
-  const even = useRecoilValue(evenSelector);
-
-  return <div>{even ? "True" : "False"}</div>;
 }
 
 export default App;
