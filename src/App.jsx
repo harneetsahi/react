@@ -1,12 +1,14 @@
 import { useEffect, useState, useRef, createContext, useContext } from "react";
-import { RecoilRoot, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  RecoilRoot,
+  useRecoilState,
+  useRecoilValue,
+  useSetRecoilState,
+} from "recoil";
 import { counterAtom, evenSelector } from "./store/atoms/counter.js";
 import { memo } from "react";
 import {
-  networkAtom,
-  jobsAtom,
   notificationsAtom,
-  messagesAtom,
   totalNoticationsSelector,
 } from "./store/atoms/notifications.js";
 
@@ -146,19 +148,24 @@ function App() {
 }
 
 function Main() {
-  const networkCount = useRecoilValue(networkAtom);
-  const jobsCount = useRecoilValue(jobsAtom);
-  const notificationCount = useRecoilValue(notificationsAtom);
-  const messageCount = useRecoilValue(messagesAtom);
+  const [notificationCount, setNotificationsCount] =
+    useRecoilState(notificationsAtom);
   const totalNotifications = useRecoilValue(totalNoticationsSelector);
 
   return (
     <div style={{ display: "flex", gap: "10px" }}>
-      <p>Network ({networkCount >= 100 ? "99+" : networkCount})</p>
-      <p>Jobs ({jobsCount})</p>
-      <p>Messages ({messageCount})</p>
       <p>
-        Notifications ( {notificationCount >= 100 ? "99+" : notificationCount})
+        Network (
+        {notificationCount.network >= 100 ? "99+" : notificationCount.network})
+      </p>
+      <p>Jobs ({notificationCount.jobs})</p>
+      <p>Messages ({notificationCount.messages})</p>
+      <p>
+        Notifications ({" "}
+        {notificationCount.notifications >= 100
+          ? "99+"
+          : notificationCount.notifications}
+        )
       </p>
       <p>Me ({totalNotifications})</p>
     </div>
