@@ -153,7 +153,14 @@ function Main() {
   const totalNotifications = useRecoilValue(totalNoticationsSelector);
 
   return (
-    <div style={{ display: "flex", gap: "10px" }}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        gap: "10px",
+        border: "1px solid gray",
+      }}
+    >
       <p>
         Network (
         {notificationCount.network >= 100 ? "99+" : notificationCount.network})
