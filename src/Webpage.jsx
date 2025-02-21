@@ -9,7 +9,7 @@ function Webpage() {
 
   return (
     <>
-      <div className="flex">
+      <div className=" h-screen">
         <Sidebar />
         <Content />
       </div>
