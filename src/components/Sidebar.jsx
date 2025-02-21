@@ -10,7 +10,7 @@ function Sidebar() {
     <>
       <div
         className={`absolute top-0 left-0 bottom-0 z-1 transition-all bg-amber-50 ${
-          isOpen ? "w-50" : "w-15"
+          isOpen ? "w-40" : "w-15"
         } `}
       >
         <div className="flex flex-col gap-5 mt-3 text-gray-800">

@@ -1,7 +1,7 @@
 function ProfileCard() {
   return (
     <>
-      <div className="bg-white rounded-xl p-10 w-60 lg:ml-20 -translate-y-5 ">
+      <div className="shadow-lg bg-white rounded-xl p-7 w-55 lg:ml-20  -translate-y-5 ">
         <div className="flex flex-col items-center">
           <img
             src="https://images.pexels.com/photos/7516846/pexels-photo-7516846.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
