@@ -78,16 +78,7 @@ function ListItems({ isOpen }) {
   ];
 
   useEffect(() => {
-    if (darkMode) {
-      document.querySelector("html").classList.remove("dark");
-
-      console.log(document.querySelector("html").classList);
-      console.log("one" + darkMode);
-    } else {
-      document.querySelector("html").classList.add("dark");
-
-      console.log("two" + darkMode);
-    }
+    document.querySelector("html").classList.toggle("dark");
   }, [darkMode]);
 
   return (
