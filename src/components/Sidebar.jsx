@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Home from "./icons/Home";
 import Chat from "./icons/Chat";
 import Settings from "./icons/Settings";
+import Moon from "./icons/Moon";
+import Sun from "./icons/Sun";
 
 function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,7 +11,7 @@ function Sidebar() {
   return (
     <>
       <div
-        className={`absolute top-0 left-0 bottom-0 z-1 transition-all bg-amber-50 ${
+        className={`min-h-screen shadow-lg absolute top-0 left-0 bottom-0 z-1 transition-all bg-gray-50 dark:bg-gray-600 ${
           isOpen ? "w-40" : "w-15"
         } `}
       >
@@ -63,6 +65,8 @@ function Sidebar() {
 }
 
 function ListItems({ isOpen }) {
+  const [darkMode, setDarkMode] = useState(true);
+
   const icons = [
     { id: "come", name: "Home", component: <Home /> },
     { id: "chat", name: "Chat", component: <Chat /> },
@@ -72,25 +76,48 @@ function ListItems({ isOpen }) {
       component: <Settings />,
     },
   ];
+
+  useEffect(() => {
+    if (darkMode) {
+      document.querySelector("html").classList.remove("dark");
+
+      console.log(document.querySelector("html").classList);
+      console.log("one" + darkMode);
+    } else {
+      document.querySelector("html").classList.add("dark");
+
+      console.log("two" + darkMode);
+    }
+  }, [darkMode]);
+
   return (
     <>
       {icons.map((icon) =>
         isOpen ? (
           <div
-            className="flex gap-3 hover:bg-amber-100 p-4 transition-all  hover:text-orange-400  hover:cursor-pointer"
+            className="flex gap-3 hover:bg-gray-100 p-4 transition-all  hover:text-orange-400  hover:cursor-pointer"
             key={icon.id}
           >
             {icon.component} {icon.name}
           </div>
         ) : (
           <div
-            className=" hover:bg-amber-100  p-4 transition-all  hover:text-orange-400 hover:cursor-pointer"
+            className=" hover:bg-gray-100  p-4 transition-all  hover:text-orange-400 hover:cursor-pointer"
             key={icon.id}
           >
             {icon.component}
           </div>
         )
       )}
+
+      <button
+        className="p-4"
+        onClick={() => {
+          setDarkMode(!darkMode);
+        }}
+      >
+        {darkMode ? <Moon /> : <Sun />}
+      </button>
     </>
   );
 }

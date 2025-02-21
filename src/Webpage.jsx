@@ -5,11 +5,9 @@ import Button from "./components/Button";
 import Input from "./components/Input";
 
 function Webpage() {
-  // const [] = useState();
-
   return (
     <>
-      <div className=" h-screen">
+      <div className="min-h-screen ">
         <Sidebar />
         <Content />
       </div>

@@ -39,7 +39,7 @@ function Center() {
           </p>
           <h1 className="font-bold text-2xl">Hello Pup</h1>
         </section>
-        <section className="ml-10 p-7 bg-white rounded-xl shadow-lg ">
+        <section className="ml-10 mr-10 p-7 bg-white rounded-xl shadow-lg ">
           <div className="font-semibold text-xl bg-gray-200 p-2 rounded-xl">
             {" "}
             {weekday[day]}, {todayDate} {months[month]} {year}
